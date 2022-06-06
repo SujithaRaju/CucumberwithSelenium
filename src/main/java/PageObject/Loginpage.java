@@ -1,6 +1,7 @@
 package PageObject;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,15 +40,36 @@ public class Loginpage {
 
     }
 
-    public boolean sighIn(){
+    public void sighIn() throws InterruptedException {
         signInButton.click();
-        return true;
+        Thread.sleep(1000);
+
     }
 
-    public boolean sighOut(){
-        signOutButton.click();
-        return true;
+    public void sighOut(){
+        try{
+            if(driver.findElement(By.xpath("//a[@href='/production/admin/signout']")).getText().equalsIgnoreCase("SIGN OUT")) {
+                signOutButton.click();
+                System.out.println("Logged out");
+            }
+        }catch (NoSuchElementException noSuchElementException){
+            System.out.println("Sorry, Page not available");
+        }
     }
 
+    public void quitBrowser(){
+        driver.quit();
+    }
+
+
+    public void sighOutValidation(){
+        try{
+            if(driver.findElement(By.xpath("//a[@href='/production/admin/signout']")).getText().equalsIgnoreCase("SIGN OUT")){
+                System.out.println("login success");
+            }
+        }catch (NoSuchElementException noSuchElementException){
+            System.out.println("Please Enter Valid credentials");
+        }
+    }
 
 }

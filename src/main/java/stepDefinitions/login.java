@@ -40,6 +40,7 @@ public class login {
     }
     @Then("Close the page browser")
     public void close_the_page_browser() {
-        { driver.quit(); }
+        driver.quit();
+        System.out.println("Quited");
     }
 }
